@@ -12,3 +12,36 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       Int     @id @default(autoincrement())
+  username String  @unique @db.VarChar(255)
+  password String  @db.VarChar(255)
+  role     String  @db.VarChar(20)
+  Teach    Teach?
+  Enroll   Enroll?
+}
+
+model Course {
+  id     Int     @id @default(autoincrement())
+  name   String  @db.VarChar(255)
+  Teach  Teach?
+  Enroll Enroll?
+}
+
+model Teach {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int    @unique
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId Int    @unique
+}
+
+model Enroll {
+  id       Int     @id @default(autoincrement())
+  user     User    @relation(fields: [userId], references: [id])
+  userId   Int     @unique
+  course   Course  @relation(fields: [courseId], references: [id])
+  courseId Int     @unique
+  grade    String? @db.VarChar(10)
+}
