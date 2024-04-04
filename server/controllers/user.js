@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
+const bcrypt = require('bcryptjs')
 
 //@desc     GET all users
 //@route    GET /
@@ -18,11 +19,13 @@ exports.getUsers = async (req, res, next) => {
 //@access   Admin
 exports.createUser = async (req, res, next) => {
   const { username, password, role } = req.body
+  const salt = await bcrypt.genSalt(10)
+  hashedPassword = await bcrypt.hash(password, salt)
   try {
     const user = await prisma.user.create({
       data: {
         username,
-        password,
+        password: hashedPassword,
         role
       }
     })
