@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 
 //@desc     GET all users
 //@route    GET /user
-//@access   Public
+//@access   Admin
 exports.getUsers = async (req, res, next) => {
   try {
     const users = await prisma.user.findMany()
@@ -74,7 +74,7 @@ exports.login = async (req, res, next) => {
 //Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   //Create token
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE
   })
 
