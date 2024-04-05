@@ -95,7 +95,70 @@ const router = express.Router()
  *         description: Unauthorized
  */
 router.route('/').get(protect, authorize('admin'), getUsers).post(protect, authorize('admin'), createUser)
+/**
+ * @swagger
+ * /user/login:
+ *   post:
+ *     summary: Log-in to the system
+ *     tags: [User]
+ *     requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  username:
+ *                    type: string
+ *                  password:
+ *                    type: string
+ *     responses:
+ *       200:
+ *         description: Log-in Successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: JWT token for authenticated user
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ */
 router.route('/login').post(login)
+/**
+ * @swagger
+ * /user/me:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Return information about me
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: User ID
+ *                 username:
+ *                   type: string
+ *                   description: User's username
+ *                 role:
+ *                   type: string
+ *                   description: User's role
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ */
 router.route('/me').get(protect, getMe)
 router.route('/logout').get(logout)
 router.route('/enroll').post(protect, authorize('admin', 'student'), enrollCourse)
