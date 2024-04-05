@@ -168,3 +168,28 @@ exports.enrollCourse = async (req, res, next) => {
     res.status(400).json({ message: 'Failed to enroll student' })
   }
 }
+
+//@desc		GET my enrollment
+//@route 	GET /user/enrollments
+//@access	Admin, Student
+exports.getMyEnrollments = async (req, res, next) => {
+  try {
+    let enrollments = await prisma.enroll.findMany({
+      where: { userId: req.user.id },
+      include: {
+        course: true
+      }
+    })
+    enrollments = enrollments.map((enrollment) => ({
+      id: enrollment.id,
+      userId: enrollment.userId,
+      courseId: enrollment.courseId,
+      courseName: enrollment.course.name,
+      grade: enrollment.grade
+    }))
+    res.status(200).json({ enrollments })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ message: 'Failed to retrieve enrollments' })
+  }
+}
