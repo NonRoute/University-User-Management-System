@@ -42,7 +42,46 @@ const router = express.Router()
  *       400:
  *         description: Bad request
  */
+/**
+ * @swagger
+ * /course:
+ *   post:
+ *     summary: (Admin, Teacher) Create a new course
+ *     tags: [Course]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the course to create
+ *     responses:
+ *       201:
+ *         description: Course created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID of the created course
+ *                 name:
+ *                   type: string
+ *                   description: Name of the created course
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ */
 router.route('/').get(getCourses).post(protect, authorize('admin', 'teacher'), createCourse)
+router.route('/:id/grade').post(protect, authorize('admin', 'teacher'), assignGrade)
+router.route('/:id/teacher').post(protect, authorize('admin', 'teacher'), assignTeacher)
 /**
  * @swagger
  * /course/{id}:
@@ -111,8 +150,84 @@ router.route('/').get(getCourses).post(protect, authorize('admin', 'teacher'), c
  *       404:
  *         description: Course not found
  */
-router.route('/:id/grade').post(protect, authorize('admin', 'teacher'), assignGrade)
-router.route('/:id/teacher').post(protect, authorize('admin', 'teacher'), assignTeacher)
+/**
+ * @swagger
+ * /course/{id}:
+ *   put:
+ *     summary: (Admin, Teacher) Update a course by ID
+ *     tags: [Course]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the course to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Updated name of the course
+ *     responses:
+ *       200:
+ *         description: Course updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID of the updated course
+ *                 name:
+ *                   type: string
+ *                   description: Updated name of the course
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ */
+/**
+ * @swagger
+ * /course/{id}:
+ *   delete:
+ *     summary: (Admin, Teacher) Delete a course by ID
+ *     tags: [Course]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the course to delete
+ *     responses:
+ *       200:
+ *         description: Course deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID of the deleted course
+ *                 name:
+ *                   type: string
+ *                   description: Name of the deleted course
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ */
 router
   .route('/:id')
   .get(getCourse)
