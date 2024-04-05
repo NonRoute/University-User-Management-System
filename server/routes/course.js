@@ -1,5 +1,12 @@
 const express = require('express')
-const { getCourses, getCourse, createCourse, updateCourse, deleteCourse } = require('../controllers/course')
+const {
+  getCourses,
+  getCourse,
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  assignTeacher
+} = require('../controllers/course')
 const { protect, authorize } = require('../middleware/auth')
 const router = express.Router()
 
@@ -9,5 +16,6 @@ router
   .get(getCourse)
   .put(protect, authorize('admin', 'teacher'), updateCourse)
   .delete(protect, authorize('admin', 'teacher'), deleteCourse)
+router.route('/assign').post(protect, authorize('admin', 'teacher'), assignTeacher)
 
 module.exports = router

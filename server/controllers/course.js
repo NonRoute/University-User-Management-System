@@ -78,3 +78,40 @@ exports.deleteCourse = async (req, res, next) => {
     res.status(400).json({ message: err })
   }
 }
+
+//@desc		Assign teacher to course
+//@route 	POST /course/assign
+//@access	Admin, Teacher
+exports.assignTeacher = async (req, res, next) => {
+  const { userId, courseId } = req.body
+  try {
+    // Check if userId is a teacher
+    const user = await prisma.user.findUnique({ where: { id: userId } })
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+    if (user.role != 'teacher' && user.role != 'admin') {
+      return res.status(400).json({ message: 'User is not a teacher' })
+    }
+    // Check if the course exists
+    const course = await prisma.course.findUnique({ where: { id: courseId } })
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' })
+    }
+    // Check if the teacher already exists
+    const existingTeacher = await prisma.teach.findFirst({
+      where: { userId: userId, courseId }
+    })
+    if (existingTeacher) {
+      return res.status(400).json({ message: 'Teacher are already teach in this course' })
+    }
+    // Create the teaching
+    const teaching = await prisma.teach.create({
+      data: { userId: userId, courseId }
+    })
+    res.status(201).json({ message: 'Assign teacher successfully', teaching })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ message: 'Failed to assign teacher' })
+  }
+}
