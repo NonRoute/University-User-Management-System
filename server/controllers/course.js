@@ -18,13 +18,53 @@ exports.getCourses = async (req, res, next) => {
 //@access   Public
 exports.getCourse = async (req, res, next) => {
   try {
-    const course = await prisma.course.findUnique({
+    let course = await prisma.course.findUnique({
       where: {
         id: Number(req.params.id)
+      },
+      include: {
+        teach: {
+          include: {
+            user: {
+              select: {
+                username: true,
+                role: true
+              }
+            }
+          }
+        },
+        enroll: {
+          include: {
+            user: {
+              select: {
+                username: true,
+                role: true
+              }
+            }
+          }
+        }
       }
     })
+
+    course = {
+      id: course.id,
+      name: course.name,
+      teach: course.teach.map((teacher) => ({
+        id: teacher.id,
+        userId: teacher.userId,
+        username: teacher.user.username,
+        role: teacher.user.role
+      })),
+      enroll: course.enroll.map((enrollment) => ({
+        id: enrollment.id,
+        userId: enrollment.userId,
+        username: enrollment.user.username,
+        role: enrollment.user.role
+      }))
+    }
     res.status(200).json(course)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
