@@ -103,3 +103,39 @@ const sendTokenResponse = (user, statusCode, res) => {
     token
   })
 }
+
+//@desc		Get current Logged in user
+//@route 	GET /user/me
+//@access	Private
+exports.getMe = async (req, res, next) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: Number(req.user.id)
+      },
+      select: {
+        id: true,
+        username: true,
+        role: true
+      }
+    })
+    res.status(200).json(user)
+  } catch (err) {
+    res.status(400).json({ message: err })
+  }
+}
+
+//@desc		Log user out / clear cookie
+//@route 	GET /user/logout
+//@access	Public
+exports.logout = async (req, res, next) => {
+  try {
+    res.cookie('token', 'none', {
+      expires: new Date(Date.now() + 10 * 1000),
+      httpOnly: true
+    })
+    res.status(200).json({ message: 'success' })
+  } catch (err) {
+    res.status(400).json({ message: err })
+  }
+}
