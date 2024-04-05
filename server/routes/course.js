@@ -5,12 +5,14 @@ const {
   createCourse,
   updateCourse,
   deleteCourse,
-  assignTeacher
+  assignTeacher,
+  assignGrade
 } = require('../controllers/course')
 const { protect, authorize } = require('../middleware/auth')
 const router = express.Router()
 
 router.route('/').get(getCourses).post(protect, authorize('admin', 'teacher'), createCourse)
+router.route('/:id/grade').post(protect, authorize('admin', 'teacher'), assignGrade)
 router
   .route('/:id')
   .get(getCourse)
