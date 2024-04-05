@@ -22,6 +22,9 @@ exports.createUser = async (req, res, next) => {
   const { username, password, role } = req.body
   const salt = await bcrypt.genSalt(10)
   hashedPassword = await bcrypt.hash(password, salt)
+  const exclude = (user, keys) => {
+    return Object.fromEntries(Object.entries(user).filter(([key]) => !keys.includes(key)))
+  }
   try {
     const user = await prisma.user.create({
       data: {
@@ -30,7 +33,7 @@ exports.createUser = async (req, res, next) => {
         role
       }
     })
-    res.status(201).json(user)
+    res.status(201).json(exclude(user, ['password']))
   } catch (err) {
     res.status(400).json({ message: err })
   }
