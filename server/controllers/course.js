@@ -126,7 +126,7 @@ exports.deleteCourse = async (req, res, next) => {
 }
 
 //@desc		Assign teacher to course
-//@route 	POST /course/assign
+//@route 	POST /course/:id/teacher
 //@access	Admin, Teacher
 exports.assignTeacher = async (req, res, next) => {
   const courseId = Number(req.params.id)
@@ -150,7 +150,7 @@ exports.assignTeacher = async (req, res, next) => {
       where: { userId: userId, courseId }
     })
     if (existingTeacher) {
-      return res.status(400).json({ message: 'Teacher are already teach in this course' })
+      return res.status(409).json({ message: 'Teacher already assigned to the course' })
     }
     // Create the teaching
     const teaching = await prisma.teach.create({
@@ -165,7 +165,7 @@ exports.assignTeacher = async (req, res, next) => {
 
 //@desc		Assign grade
 //@route 	POST /course/:id/grade
-//@access	Admin, Student
+//@access	Admin, Teacher
 exports.assignGrade = async (req, res, next) => {
   const { courseId } = req.params.id
   const { userId, grade } = req.body

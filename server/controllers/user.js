@@ -164,7 +164,7 @@ exports.enrollCourse = async (req, res, next) => {
       where: { userId: req.user.id, courseId }
     })
     if (existingEnrollment) {
-      return res.status(400).json({ message: 'You are already enrolled in this course' })
+      return res.status(409).json({ message: 'You already enrolled in this course' })
     }
     // Create the enrollment
     const enrollment = await prisma.enroll.create({

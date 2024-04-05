@@ -283,6 +283,8 @@ router.route('/enroll').post(protect, authorize('admin', 'student'), enrollCours
  *         description: Bad request
  *       401:
  *         description: Unauthorized
+ *       409:
+ *         description: Conflict, You are already enrolled in this course
  */
 router.route('/enrollments').get(protect, authorize('admin', 'student'), getMyEnrollments)
 
