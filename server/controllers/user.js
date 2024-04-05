@@ -17,6 +17,7 @@ exports.getUsers = async (req, res, next) => {
     })
     res.status(200).json(users)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
@@ -44,6 +45,7 @@ exports.createUser = async (req, res, next) => {
     })
     res.status(201).json(user)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
@@ -79,6 +81,7 @@ exports.login = async (req, res, next) => {
 
     sendTokenResponse(user, 200, res)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
@@ -121,6 +124,7 @@ exports.getMe = async (req, res, next) => {
     })
     res.status(200).json(user)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
@@ -136,6 +140,7 @@ exports.logout = async (req, res, next) => {
     })
     res.status(200).json({ message: 'success' })
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }

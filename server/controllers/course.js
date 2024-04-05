@@ -9,6 +9,7 @@ exports.getCourses = async (req, res, next) => {
     const courses = await prisma.course.findMany()
     res.status(200).json(courses)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
@@ -82,6 +83,7 @@ exports.createCourse = async (req, res, next) => {
     })
     res.status(201).json(course)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
@@ -99,6 +101,7 @@ exports.updateCourse = async (req, res, next) => {
     })
     res.status(200).json(course)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
@@ -115,6 +118,7 @@ exports.deleteCourse = async (req, res, next) => {
     })
     res.status(200).json(course)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err })
   }
 }
