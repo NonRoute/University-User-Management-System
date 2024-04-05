@@ -27,6 +27,10 @@ exports.getUsers = async (req, res, next) => {
 //@access   Admin
 exports.createUser = async (req, res, next) => {
   const { username, password, role } = req.body
+  // Check if the role is valid ('admin', 'teacher', or 'student')
+  if (!['admin', 'teacher', 'student'].includes(role)) {
+    return res.status(400).json({ message: 'Invalid role' })
+  }
   const salt = await bcrypt.genSalt(10)
   hashedPassword = await bcrypt.hash(password, salt)
 
