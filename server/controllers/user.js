@@ -139,3 +139,32 @@ exports.logout = async (req, res, next) => {
     res.status(400).json({ message: err })
   }
 }
+
+//@desc		Enroll student in course
+//@route 	POST /user/enroll
+//@access	Admin, Student
+exports.enrollCourse = async (req, res, next) => {
+  const { courseId } = req.body
+  try {
+    // Check if the course exists
+    const course = await prisma.course.findUnique({ where: { id: courseId } })
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' })
+    }
+    // Check if the enrollment already exists
+    const existingEnrollment = await prisma.enroll.findFirst({
+      where: { userId: req.user.id, courseId }
+    })
+    if (existingEnrollment) {
+      return res.status(400).json({ message: 'You are already enrolled in this course' })
+    }
+    // Create the enrollment
+    const enrollment = await prisma.enroll.create({
+      data: { userId: req.user.id, courseId }
+    })
+    res.status(201).json({ message: 'Enrolled successfully', enrollment })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ message: 'Failed to enroll student' })
+  }
+}
