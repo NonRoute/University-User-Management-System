@@ -12,7 +12,8 @@ const {
   updateCourse,
   deleteCourse,
   assignTeacher,
-  assignGrade
+  assignGrade,
+  myCourse
 } = require('../controllers/course')
 const { protect, authorize } = require('../middleware/auth')
 const router = express.Router()
@@ -143,6 +144,53 @@ router.route('/').get(getCourses).post(protect, authorize('admin', 'teacher'), c
  *         description: Student or course not found
  */
 router.route('/:id/grade').post(protect, authorize('admin', 'teacher'), assignGrade)
+/**
+ * @swagger
+ * /course/my-course:
+ *   get:
+ *     summary: (Admin, Teacher) Get courses taught by me
+ *     tags: [Course]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Courses retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 coursesData:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       courseId:
+ *                         type: integer
+ *                         description: ID of the course
+ *                       courseName:
+ *                         type: string
+ *                         description: Name of the course
+ *                       enrolledStudents:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             studentId:
+ *                               type: integer
+ *                               description: ID of the student
+ *                             studentUsername:
+ *                               type: string
+ *                               description: Username of the student
+ *                             grade:
+ *                               type: string
+ *                               description: Grade of the student in the course
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ */
+router.route('/my-course').get(protect, authorize('admin', 'teacher'), myCourse)
 /**
  * @swagger
  * /course/{id}/teacher:

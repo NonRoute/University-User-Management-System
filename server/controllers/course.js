@@ -190,3 +190,43 @@ exports.assignGrade = async (req, res, next) => {
     res.status(400).json({ message: 'Failed to assign grade' })
   }
 }
+
+//@desc		GET my course
+//@route 	POST /course/my-course
+//@access	Admin, Teacher
+exports.myCourse = async (req, res, next) => {
+  try {
+    let teaching = await prisma.teach.findMany({
+      where: { userId: req.user.id },
+      include: {
+        course: {
+          include: {
+            enroll: {
+              include: {
+                user: {
+                  select: {
+                    id: true,
+                    username: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+    const coursesData = teaching.map((teach) => ({
+      courseId: teach.courseId,
+      courseName: teach.course.name,
+      enrolledStudents: teach.course.enroll.map((enrollment) => ({
+        studentId: enrollment.userId,
+        studentUsername: enrollment.user.username,
+        grade: enrollment.grade
+      }))
+    }))
+    res.status(200).json({ coursesData })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ message: 'Failed to assign grade' })
+  }
+}
