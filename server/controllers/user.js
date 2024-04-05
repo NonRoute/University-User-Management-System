@@ -8,7 +8,13 @@ const jwt = require('jsonwebtoken')
 //@access   Admin
 exports.getUsers = async (req, res, next) => {
   try {
-    const users = await prisma.user.findMany()
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        role: true
+      }
+    })
     res.status(200).json(users)
   } catch (err) {
     res.status(400).json({ message: err })
@@ -22,18 +28,21 @@ exports.createUser = async (req, res, next) => {
   const { username, password, role } = req.body
   const salt = await bcrypt.genSalt(10)
   hashedPassword = await bcrypt.hash(password, salt)
-  const exclude = (user, keys) => {
-    return Object.fromEntries(Object.entries(user).filter(([key]) => !keys.includes(key)))
-  }
+
   try {
     const user = await prisma.user.create({
       data: {
         username,
         password: hashedPassword,
         role
+      },
+      select: {
+        id: true,
+        username: true,
+        role: true
       }
     })
-    res.status(201).json(exclude(user, ['password']))
+    res.status(201).json(user)
   } catch (err) {
     res.status(400).json({ message: err })
   }
