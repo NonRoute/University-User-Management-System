@@ -123,7 +123,8 @@ exports.deleteCourse = async (req, res, next) => {
 //@route 	POST /course/assign
 //@access	Admin, Teacher
 exports.assignTeacher = async (req, res, next) => {
-  const { userId, courseId } = req.body
+  const courseId = Number(req.params.id)
+  const { userId } = req.body
   try {
     // Check if userId is a teacher
     const user = await prisma.user.findUnique({ where: { id: userId } })
