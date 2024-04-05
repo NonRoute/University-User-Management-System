@@ -148,7 +148,7 @@ exports.logout = async (req, res, next) => {
   }
 }
 
-//@desc		Enroll student in course
+//@desc		Enroll me in a course
 //@route 	POST /user/enroll
 //@access	Admin, Student
 exports.enrollCourse = async (req, res, next) => {

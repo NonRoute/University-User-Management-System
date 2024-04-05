@@ -46,7 +46,9 @@ exports.getCourse = async (req, res, next) => {
         }
       }
     })
-
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' })
+    }
     course = {
       id: course.id,
       name: course.name,
