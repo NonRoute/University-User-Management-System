@@ -160,8 +160,130 @@ router.route('/login').post(login)
  *         description: Unauthorized
  */
 router.route('/me').get(protect, getMe)
+/**
+ * @swagger
+ * /user/logout:
+ *   get:
+ *     summary: Log user out / clear cookie
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Successfully logged out
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Logout success message
+ *             example:
+ *               message: success
+ *       400:
+ *         description: Bad request
+ */
 router.route('/logout').get(logout)
+/**
+ * @swagger
+ * /user/enroll:
+ *   post:
+ *     summary: (Admin, Student) Enroll me in a course
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               courseId:
+ *                 type: integer
+ *                 description: ID of the course to enroll in
+ *     responses:
+ *       201:
+ *         description: Successfully enrolled in the course
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Enrollment success message
+ *                 enrollment:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       description: Enrollment ID
+ *                     userId:
+ *                       type: integer
+ *                       description: ID of the enrolled user
+ *                     courseId:
+ *                       type: integer
+ *                       description: ID of the enrolled course
+ *                     grade:
+ *                       type: string
+ *                       description: Grade of the enrolled student (null initially)
+ *             example:
+ *               message: Enrolled successfully
+ *               enrollment:
+ *                 id: 2
+ *                 userId: 1
+ *                 courseId: 2
+ *                 grade: null
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Course not found
+ *       401:
+ *         description: Unauthorized
+ */
 router.route('/enroll').post(protect, authorize('admin', 'student'), enrollCourse)
+/**
+ * @swagger
+ * /user/enrollments:
+ *   get:
+ *     summary: (Admin, Student) Get my enrollments
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 enrollments:
+ *                   type: array
+ *                   description: List of my enrollments
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                         description: Enrollment ID
+ *                       userId:
+ *                         type: integer
+ *                         description: ID of the enrolled user
+ *                       courseId:
+ *                         type: integer
+ *                         description: ID of the enrolled course
+ *                       courseName:
+ *                         type: string
+ *                         description: Name of the enrolled course
+ *                       grade:
+ *                         type: string
+ *                         description: Grade of the enrolled student (null initially)
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ */
 router.route('/enrollments').get(protect, authorize('admin', 'student'), getMyEnrollments)
 
 module.exports = router
