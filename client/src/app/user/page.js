@@ -4,9 +4,11 @@ import Content from '@/components/Content'
 import InputWithLabel from '@/components/InputWithLabel'
 import Navbar from '@/components/Navbar'
 import SelectWithLabel from '@/components/SelectWithLabel'
+import createUser from '@/libs/createUser'
 import getUsers from '@/libs/getUsers'
 import { useSession } from 'next-auth/react'
 import { Fragment, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function User() {
   const { data: session, status } = useSession()
@@ -36,13 +38,13 @@ export default function User() {
     fetchData()
   }, [])
 
-  const AddButton = () => {
+  const CreateButton = () => {
     return (
       <button
-        className="text-center bg-white text-cyan-600 py-2 px-6 rounded-lg text-xl font-bold drop-shadow-md hover:bg-gray-200 transition-all active:bg-gray-300 active:ring-4 ring-cyan-600"
+        className="text-center bg-white text-cyan-600 py-2 px-3 sm:px-6 rounded-lg text-lg sm:text-xl font-bold drop-shadow-md hover:bg-gray-200 transition-all active:bg-gray-300 active:ring-4 ring-cyan-600"
         onClick={() => setIsShowPopup(true)}
       >
-        Add +
+        Create User
       </button>
     )
   }
@@ -58,15 +60,26 @@ export default function User() {
     )
   }
 
-  const onAddUser = async (e) => {
+  const onCreateUser = async (e) => {
     e.preventDefault()
-    console.log(state)
+    const response = await createUser(session.user.token, state.username, state.password, state.role)
+    if (response?.ok) {
+      toast.success('Create success')
+      setState({
+        username: '',
+        password: '',
+        role: ''
+      })
+      fetchData()
+    } else {
+      toast.error('Create failed')
+    }
   }
 
   return (
     <>
       <Navbar />
-      <Content header="Users" rightElement={<AddButton />}>
+      <Content header="Users" rightElement={<CreateButton />}>
         <div className="grid grid-cols-[min-content_1fr_1fr] shadow-lg overflow-x-auto">
           <div className="py-2 px-4 bg-gray-300 font-semibold text-lg rounded-tl-lg">ID</div>
           <div className="py-2 px-4 bg-gray-300 font-semibold text-lg">Username</div>
@@ -85,10 +98,10 @@ export default function User() {
       {isShowPopup && (
         <div className="absolute top-0 left-0 w-screen bg-black/70">
           <div className="flex items-center justify-center min-h-screen w-full">
-            <Content header="Add User" width="w-[480px]" rightElement={<CloseButton />}>
-              <form onSubmit={onAddUser} className="flex flex-col gap-4">
-                <InputWithLabel label="Username" type="text" onChange={onChangeForm('username')} />
-                <InputWithLabel label="Password" type="text" onChange={onChangeForm('password')} />
+            <Content header="Create User" width="w-[480px]" rightElement={<CloseButton />}>
+              <form onSubmit={onCreateUser} className="flex flex-col gap-4">
+                <InputWithLabel label="Username" type="text" value={state.username} onChange={onChangeForm('username')} />
+                <InputWithLabel label="Password" type="text" value={state.password} onChange={onChangeForm('password')} />
                 <SelectWithLabel
                   label="Role"
                   options={[
@@ -96,6 +109,7 @@ export default function User() {
                     { value: 'teacher', name: 'Teacher' },
                     { value: 'student', name: 'Student' }
                   ]}
+                  value={state.role}
                   onChange={onChangeForm('role')}
                 />
                 <div className="flex flex-col gap-1 mt-6">
@@ -103,7 +117,7 @@ export default function User() {
                     type="submit"
                     className="bg-gradient-to-br from-cyan-500 to-sky-600 hover:from-cyan-400 hover:to-sky-500 py-2 px-3 text-white font-semibold rounded-md text-lg transition-all active:ring-4 ring-slate-300 drop-shadow-md"
                   >
-                    Add
+                    Create
                   </button>
                 </div>
               </form>
