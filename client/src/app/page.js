@@ -9,7 +9,7 @@ export default function Home() {
       </div>
       <Link
         href="/login"
-        className="text-center bg-white text-cyan-600 p-2 rounded-lg text-xl font-bold w-72 mt-16 drop-shadow-md hover:bg-gray-200 transition-colors active:bg-gray-300 active:ring-4 ring-cyan-600"
+        className="text-center bg-white text-cyan-600 p-2 rounded-lg text-xl font-bold w-72 mt-16 drop-shadow-md hover:bg-gray-200 transition-all active:bg-gray-300 active:ring-4 ring-cyan-600"
       >
         Login
       </Link>

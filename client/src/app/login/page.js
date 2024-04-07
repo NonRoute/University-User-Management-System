@@ -2,10 +2,10 @@
 import Content from '@/components/Content'
 import InputWithLabel from '@/components/InputWithLabel'
 import Navbar from '@/components/Navbar'
-import login from '@/libs/login'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { signIn } from 'next-auth/react'
 
 export default function Login() {
   const router = useRouter()
@@ -20,12 +20,17 @@ export default function Login() {
 
   const onLogin = async (e) => {
     e.preventDefault()
-    const response = await login(state.username, state.password)
-    if (response.status == 200) {
+    const response = await signIn('credentials', {
+      username: state.username,
+      password: state.password,
+      redirect: false
+    })
+    console.log(response)
+    if (response?.ok) {
       toast.success('Login success')
       router.push('/')
     } else {
-      toast.error((await response.json()).message)
+      toast.error('Login failed')
     }
   }
 
@@ -44,7 +49,7 @@ export default function Login() {
           <div className="flex flex-col gap-1 mt-6">
             <button
               type="submit"
-              className="bg-gradient-to-br from-cyan-500 to-sky-600 hover:from-cyan-400 hover:to-sky-500 py-2 px-3 text-white font-semibold rounded-md hover:bg-slate-200 text-lg"
+              className="bg-gradient-to-br from-cyan-500 to-sky-600 hover:from-cyan-400 hover:to-sky-500 py-2 px-3 text-white font-semibold rounded-md text-lg transition-all active:ring-4 ring-slate-300 drop-shadow-md"
             >
               Login
             </button>

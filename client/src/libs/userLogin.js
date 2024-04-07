@@ -1,4 +1,4 @@
-export default async function login(username, password) {
+export default async function userLogin(username, password) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
     method: 'POST',
     headers: {
