@@ -24,10 +24,18 @@ export default function User() {
     fetchData()
   }, [])
 
+  const RightElement = () => {
+    return (
+      <button className="text-center bg-white text-cyan-600 py-2 px-6 rounded-lg text-xl font-bold drop-shadow-md hover:bg-gray-200 transition-all active:bg-gray-300 active:ring-4 ring-cyan-600">
+        Add +
+      </button>
+    )
+  }
+
   return (
     <>
       <Navbar />
-      <Content header="Users" width="">
+      <Content header="Users" rightElement={<RightElement />}>
         <div className="grid grid-cols-[min-content_1fr_1fr] shadow-lg overflow-x-auto">
           <div className="py-2 px-4 bg-gray-300 font-semibold text-lg rounded-tl-lg">ID</div>
           <div className="py-2 px-4 bg-gray-300 font-semibold text-lg">Username</div>
