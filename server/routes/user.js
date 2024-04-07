@@ -120,6 +120,15 @@ router.route('/').get(protect, authorize('admin'), getUsers).post(protect, autho
  *             schema:
  *               type: object
  *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: User ID
+ *                 username:
+ *                   type: string
+ *                   description: User's username
+ *                 role:
+ *                   type: string
+ *                   description: User's role
  *                 token:
  *                   type: string
  *                   description: JWT token for authenticated user

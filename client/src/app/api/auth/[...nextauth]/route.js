@@ -14,7 +14,7 @@ export const authOptions = {
         if (!credentials.username | !credentials.password) return null
         const user = await userLogin(credentials.username, credentials.password)
         if (user.ok) {
-          return user
+          return user.json()
         } else {
           return null
         }
