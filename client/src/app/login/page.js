@@ -25,10 +25,9 @@ export default function Login() {
       password: state.password,
       redirect: false
     })
-    console.log(response)
     if (response?.ok) {
       toast.success('Login success')
-      router.push('/')
+      router.push('/user')
     } else {
       toast.error('Login failed')
     }
@@ -37,7 +36,7 @@ export default function Login() {
   return (
     <>
       <Navbar />
-      <Content header="Login" width="w-[480px]">
+      <Content header="Login" width="max-w-[480px]">
         <form onSubmit={onLogin} className="flex flex-col gap-4">
           <InputWithLabel label="Username" type="text" autoComplete="username" onChange={onChangeForm('username')} />
           <InputWithLabel

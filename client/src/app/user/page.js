@@ -1,4 +1,5 @@
 'use client'
+import AccessDenied from '@/components/AccessDenied'
 import Content from '@/components/Content'
 import Navbar from '@/components/Navbar'
 import { useSession } from 'next-auth/react'
@@ -6,7 +7,10 @@ import { useSession } from 'next-auth/react'
 export default function User() {
   const { data: session, status } = useSession()
 
-  console.log(session.user)
+  if (session?.user?.role !== 'admin') {
+    return <AccessDenied />
+  }
+
   return (
     <>
       <Navbar />
