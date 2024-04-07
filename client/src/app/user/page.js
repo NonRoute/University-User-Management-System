@@ -96,12 +96,22 @@ export default function User() {
         </div>
       </Content>
       {isShowPopup && (
-        <div className="absolute top-0 left-0 w-screen bg-black/70">
-          <div className="flex items-center justify-center min-h-screen w-full">
+        <div className="fixed top-0 w-screen bg-black/70">
+          <div className="flex items-center justify-center min-h-screen h-full w-full">
             <Content header="Create User" width="w-[480px]" rightElement={<CloseButton />}>
               <form onSubmit={onCreateUser} className="flex flex-col gap-4">
-                <InputWithLabel label="Username" type="text" value={state.username} onChange={onChangeForm('username')} />
-                <InputWithLabel label="Password" type="text" value={state.password} onChange={onChangeForm('password')} />
+                <InputWithLabel
+                  label="Username"
+                  type="text"
+                  value={state.username}
+                  onChange={onChangeForm('username')}
+                />
+                <InputWithLabel
+                  label="Password"
+                  type="text"
+                  value={state.password}
+                  onChange={onChangeForm('password')}
+                />
                 <SelectWithLabel
                   label="Role"
                   options={[

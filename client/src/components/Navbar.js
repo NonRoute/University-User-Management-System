@@ -29,7 +29,7 @@ export default function Navbar() {
                   callbackUrl: '/'
                 })
               }}
-              className="border-sky-600 border-2 py-1 px-1 sm:px-3 text-sky-600 font-semibold rounded-md hover:bg-slate-200 transition-all active:ring-2 ring-cyan-600"
+              className="border-sky-600 border-2 py-1 px-3 text-sky-600 font-semibold rounded-md hover:bg-slate-200 transition-all active:ring-2 ring-cyan-600"
             >
               Logout
             </button>
