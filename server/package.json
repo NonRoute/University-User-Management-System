@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "jest --watchAll --verbose false",
     "dev": "nodemon server.js",
     "start:prod": "prisma migrate deploy && npx prisma migrate dev --name init && npx prisma db seed && npm start"
   },

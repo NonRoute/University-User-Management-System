@@ -35,5 +35,3 @@ const server = app.listen(port, () =>
 🚀 Server ready at: http://localhost:${port}
 `)
 )
-
-module.exports = app
