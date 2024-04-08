@@ -44,7 +44,7 @@
 ### 3B. (With Docker)
 
 1. Run `docker-compose up`
-2. Wait until all service start. Once ready, it should look like this
+2. Wait until all services start. Once ready, it should look like this
 
 <p align="left">
     <img src="./images/DockerFinish.png" width="500">
