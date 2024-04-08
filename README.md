@@ -1,5 +1,14 @@
 # University User Management System
 
+## Table of Contents
+
+- [Technologies](#technologies)
+- [How to run](#how-to-run)
+- [ER diagram](#er-diagram)
+- [Initial Data](#initial-data)
+- [Frontend UI](#frontend-ui)
+- [How I developed this project](#how-i-developed-this-project)
+
 ## Technologies
 
 **Frontend:** Next.js, TailwindCSS, NextAuth, React-Toastify
