@@ -29,8 +29,11 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 
-const server = app.listen(8080, () =>
+const port = process.env.PORT || 8080
+const server = app.listen(port, () =>
   console.log(`
-🚀 Server ready at: http://localhost:8080
+🚀 Server ready at: http://localhost:${port}
 `)
 )
+
+module.exports = app
