@@ -20,10 +20,6 @@ export default function User() {
     role: ''
   })
 
-  if (session?.user?.role !== 'admin') {
-    return <AccessDenied />
-  }
-
   const onChangeForm = (name) => (event) => {
     setState({ ...state, [name]: event.target.value })
   }
@@ -74,6 +70,10 @@ export default function User() {
     } else {
       toast.error('Create failed')
     }
+  }
+
+  if (session?.user?.role !== 'admin') {
+    return <AccessDenied />
   }
 
   return (
