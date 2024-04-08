@@ -5,12 +5,16 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+    restart: always
     volumes:
       - ./client:/app
       - /app/node_modules
       - /app/.next
     ports:
       - '3000:3000'
+    depends_on:
+      - backend
+
   database:
     image: mysql:8.3
     restart: always
@@ -23,6 +27,7 @@ services:
       - '3307:3306'
     volumes:
       - database:/var/lib/mysql-database
+
   backend:
     build:
       context: ./server
@@ -38,5 +43,6 @@ services:
       - 8080:8080
     depends_on:
       - database
+
 volumes:
   database:

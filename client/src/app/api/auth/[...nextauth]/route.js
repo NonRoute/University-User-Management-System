@@ -3,6 +3,8 @@ import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
+  site: process.env.NEXTAUTH_URL,
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -11,12 +13,16 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials, req) {
-        if (!credentials.username | !credentials.password) return null
-        const user = await userLogin(credentials.username, credentials.password)
-        if (user.ok) {
-          return user.json()
-        } else {
-          return null
+        try {
+          if (!credentials.username | !credentials.password) return null
+          const user = await userLogin(credentials.username, credentials.password)
+          if (user.ok) {
+            return user.json()
+          } else {
+            return null
+          }
+        } catch (e) {
+          console.log(e)
         }
       }
     })
