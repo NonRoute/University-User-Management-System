@@ -33,7 +33,7 @@ exports.protect = async (req, res, next) => {
 //Grant access to specific roles
 exports.authorize = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    if (!req?.user?.role || !roles.includes(req?.user?.role)) {
       return res.status(401).json({
         message: `User role ${req.user.role} is not authorized to access this route`
       })
