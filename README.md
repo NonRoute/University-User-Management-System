@@ -57,14 +57,39 @@
 
 ## Initial Data
 
+Run `npx prisma migrate reset` in `server` directory to reset and seed the database with inital data
+
 Run `npx prisma db seed` in `server` directory to seed the database with inital data
 
-**User table**
-| username | password | role |
+**User**
+| Username | Password | Role |
 | -------- | -------- | ------- |
 | admin | 123 | admin |
 | teacher | 123 | teacher |
+| teacher2 | 123 | teacher |
 | student | 123 | student |
+| student2 | 123 | student |
+
+**Course**
+| Name |
+| -------- |
+| Computer Programming |
+| Data Structure |
+| Algorithm Design |
+
+**Teach**
+| Username | Course Name |
+|-----------|----------------------|
+| teacher | Computer Programming |
+| teacher | Data Structure |
+| teacher2 | Computer Programming |
+
+**Enroll**
+| Username | Course Name | Grade |
+|-----------|----------------------|-------|
+| student | Computer Programming | A |
+| student | Data Structure | |
+| student2 | Computer Programming | |
 
 ## Frontend UI
 

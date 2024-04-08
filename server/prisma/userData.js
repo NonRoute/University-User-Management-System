@@ -10,7 +10,17 @@ module.exports = userData = [
     role: 'teacher'
   },
   {
+    username: 'teacher2',
+    password: '123',
+    role: 'teacher'
+  },
+  {
     username: 'student',
+    password: '123',
+    role: 'student'
+  },
+  {
+    username: 'student2',
     password: '123',
     role: 'student'
   }
