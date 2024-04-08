@@ -167,13 +167,14 @@ exports.assignTeacher = async (req, res, next) => {
 //@route 	POST /course/:id/grade
 //@access	Admin, Teacher
 exports.assignGrade = async (req, res, next) => {
-  const { courseId } = req.params.id
+  const courseId = Number(req.params.id)
   const { userId, grade } = req.body
   try {
     // Check if the enrollment exists
     let enrollment = await prisma.enroll.findFirst({
-      where: { userId: userId, courseId }
+      where: { userId: userId, courseId: courseId }
     })
+
     if (!enrollment) {
       return res.status(404).json({ message: 'Student or course not found' })
     }
@@ -227,6 +228,6 @@ exports.myCourse = async (req, res, next) => {
     res.status(200).json({ coursesData })
   } catch (err) {
     console.log(err)
-    res.status(400).json({ message: 'Failed to assign grade' })
+    res.status(400).json({ message: err })
   }
 }
