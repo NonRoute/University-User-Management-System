@@ -7,6 +7,7 @@
 - [ER diagram](#er-diagram)
 - [Initial Data](#initial-data)
 - [Frontend UI](#frontend-ui)
+- [API Document](#api-document)
 - [How I developed this project](#how-i-developed-this-project)
 
 ## Technologies
@@ -124,6 +125,14 @@ Create user page (Admin Access Only)
 
 <p align="center">
     <img src="./images/CreateUser.png" width="600">
+</p>
+
+## API Document
+
+Open [http://localhost:8080/api-docs](http://localhost:8080/api-docs) to see the API Document
+
+<p align="center">
+    <img src="./images/APIdoc.png" width="600">
 </p>
 
 ## How I developed this project
