@@ -3,6 +3,7 @@ const prisma = new PrismaClient()
 const courseController = require('../controllers/course')
 
 let validCourseId
+let validCourseId2
 let validTeacherId
 let validStudentId
 
@@ -12,8 +13,11 @@ beforeAll(async () => {
   await prisma.course.deleteMany({})
   await prisma.user.deleteMany({})
 
-  const course = await prisma.course.create({ data: { name: 'Test Course' } })
+  const course = await prisma.course.create({ data: { name: 'Test Course 1' } })
   validCourseId = course.id
+
+  const course2 = await prisma.course.create({ data: { name: 'Test Course 2' } })
+  validCourseId2 = course2.id
 
   const teacher = await prisma.user.create({ data: { username: 'testteacher', password: '123', role: 'teacher' } })
   validTeacherId = teacher.id
@@ -111,7 +115,7 @@ describe('updateCourse', () => {
 
 describe('deleteCourse', () => {
   test('should delete an existing course', async () => {
-    const req = { params: { id: validCourseId + 1 } }
+    const req = { params: { id: validCourseId2 } }
     const res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn()
