@@ -30,7 +30,16 @@
 3. Navigate to `client` directory
 4. Create file named `.env.local` by copying from `.env.local.example`
 
-### 3A. (Without Docker) Install dependencies
+### 3A. (With Docker)
+
+1. Run `docker-compose up`
+2. Wait until all services start. Once ready, it should look like this
+
+<p align="left">
+    <img src="./images/DockerFinish.png" width="500">
+</p>
+
+### 3B. (Without Docker) Install dependencies
 
 1. Install MySQL Workbench and update the `DATABASE_URL` in the `.env` file inside `server` directory to match with your connection string
 2. Change `NEXTAUTH_URL_INTERNAL` in the `.env` file inside `client` directory to `http://localhost:8080`
@@ -40,15 +49,6 @@
 6. Run `npm run dev` to start the server
 7. Navigate to `client` directory
 8. Run `npm install` and `npm run dev` to start the client
-
-### 3B. (With Docker)
-
-1. Run `docker-compose up`
-2. Wait until all services start. Once ready, it should look like this
-
-<p align="left">
-    <img src="./images/DockerFinish.png" width="500">
-</p>
 
 #### Open [http://localhost:3000](http://localhost:3000) to see the frontend
 
