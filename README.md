@@ -26,8 +26,7 @@
 6. Run `npm run dev` to start the server
 7. Navigate to `client` directory 
 8. Run `npm install` and `npm run dev` to start the client
-   
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
 
 ### 3B. (With Docker)
 1. Run `docker-compose up`
@@ -37,7 +36,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     <img src="./images/DockerFinish.png" width="500">
 </p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Open [http://localhost:3000](http://localhost:3000) to see the frontend
+#### Open [http://localhost:8080/api-docs](http://localhost:8080/api-docs) to see the API Document
 
 ## ER diagram
 <p align="center">
@@ -46,16 +46,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Frontend UI
 <p align="center">
-    <img src="./images/Landing.png" width="800">
+    <img src="./images/Landing.png" width="600">
 </p>
 <p align="center">
-    <img src="./images/Login.png" width="800">
+    <img src="./images/Login.png" width="600">
 </p>
 <p align="center">
-    <img src="./images/Users.png" width="800">
+    <img src="./images/Users.png" width="600">
 </p>
 <p align="center">
-    <img src="./images/CreateUser.png" width="800">
+    <img src="./images/CreateUser.png" width="600">
 </p>
 
 ## How I developed this project
@@ -63,6 +63,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 2. Choose frontend, backend languages and frameworks and database to use
 3. Create ER diagram and database schema
 4. Create UI design with Figma
+   
+<p align="left">
+    <img src="./images/UI.png" width="500">
+</p>
+
 5. Design API endpoints and develop backend server
-6. develop frontend
-7. Create Docker compose
+6. Create API document with swagger
+7. Develop frontend
+8. Create Docker compose
