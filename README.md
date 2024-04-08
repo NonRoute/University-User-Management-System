@@ -33,13 +33,14 @@
 ### 3A. (Without Docker) Install dependencies
 
 1. Install MySQL Workbench and update the `DATABASE_URL` in the `.env` file inside `server` directory to match with your connection string
-2. Navigate to `server` directory
-3. Run `npm install`
-4. Run `npx prisma migrate dev --name init` to setup the database schema
-5. Run `npx prisma db seed` to seed the database with inital data
-6. Run `npm run dev` to start the server
-7. Navigate to `client` directory
-8. Run `npm install` and `npm run dev` to start the client
+2. Change `NEXTAUTH_URL_INTERNAL` in the `.env` file inside `client` directory to `http://localhost:8080`
+3. Navigate to `server` directory
+4. Run `npm install`
+5. Run `npx prisma migrate dev --name init` to setup the database schema
+6. Run `npx prisma db seed` to seed the database with inital data
+7. Run `npm run dev` to start the server
+8. Navigate to `client` directory
+9. Run `npm install` and `npm run dev` to start the client
 
 ### 3B. (With Docker)
 
@@ -141,5 +142,5 @@ Create user page (Admin Access Only)
 5. Design API endpoints and develop backend server
 6. Create API document with swagger
 7. Develop frontend
-8. Create Docker compose
-9. Create Backend unit testing
+8. Create docker compose
+9. Create backend unit testing
