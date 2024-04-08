@@ -37,10 +37,9 @@
 3. Navigate to `server` directory
 4. Run `npm install`
 5. Run `npx prisma migrate dev --name init` to setup the database schema
-6. Run `npx prisma db seed` to seed the database with inital data
-7. Run `npm run dev` to start the server
-8. Navigate to `client` directory
-9. Run `npm install` and `npm run dev` to start the client
+6. Run `npm run dev` to start the server
+7. Navigate to `client` directory
+8. Run `npm install` and `npm run dev` to start the client
 
 ### 3B. (With Docker)
 
