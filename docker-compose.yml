@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  client:
+  frontend:
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -11,3 +11,32 @@ services:
       - /app/.next
     ports:
       - '3000:3000'
+  database:
+    image: mysql:8.3
+    restart: always
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '3307:3306'
+    volumes:
+      - database:/var/lib/mysql-database
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: mysql://root:password@database:3306/university
+      JWT_COOKIE_EXPIRE: 30
+      JWT_SECRET: ThisIsJWTSecret
+      JWT_EXPIRE: 30d
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+volumes:
+  database:
