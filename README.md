@@ -1,4 +1,5 @@
 # University User Management System
+This repository contains my submission for the Full Stack Developer (Junior) job application assignment
 
 ## Table of Contents
 
@@ -14,9 +15,11 @@
 
 **Frontend:** Next.js, TailwindCSS, NextAuth, React-Toastify
 
-**Backend:** Node.js, Express.js, Prisma, Jest, Swagger, Bcryptjs
+**Backend:** Node.js, Express.js, Prisma, Jest, Swagger, bcryptjs
 
 **Database:** MySQL
+
+**Tools:** VS Code, Git and GitHub, draw.io, Figma, Postman, MySQL Workbench, Docker
 
 ## How to run
 
@@ -67,9 +70,9 @@
 
 ## Initial Data
 
-Run `npx prisma migrate reset` in `server` directory to reset and seed the database with inital data
+Run `npx prisma migrate reset` in `server` directory to **reset** and **seed** the database with inital data
 
-Run `npx prisma db seed` in `server` directory to seed the database with inital data
+Run `npx prisma db seed` in `server` directory to **seed** the database with inital data
 
 **User**
 | Username | Password | Role |
