@@ -19,7 +19,7 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Universiry User Management System API',
+      title: 'University User Management System API',
       version: '1.0.0',
       description: 'API Document'
     }
